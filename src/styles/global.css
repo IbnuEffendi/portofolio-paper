@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  /* Font */
+  --font-serif: "Lora", serif;
+  --font-sans: "Inter", sans-serif;
+
+  /* --- LIGHT MODE (DEFAULT) --- */
+  --color-paper: #F5F5F0;       /* Putih Gading */
+  --color-ink: #2B2B2B;         /* Hitam Arang */
+  --color-subtle: #666666;      /* Abu-abu */
+  --color-accent: #2F4F4F;      /* Hijau Slate Gelap */
+  --color-grid: #2B2B2B;        /* Warna Grid */
+}
+
+/* --- DARK MODE OVERRIDES --- */
+/* Class .dark akan ditambahkan ke tag <html> via JS */
+.dark {
+  --color-paper: #0F172A;       /* Slate 900 (Biru Malam Gelap) */
+  --color-ink: #E2E8F0;         /* Slate 200 (Putih Tulang) */
+  --color-subtle: #94A3B8;      /* Slate 400 (Abu-abu Biru) */
+  --color-accent: #38BDF8;      /* Sky 400 (Biru Neon/Cyan) - Khas Blueprint */
+  --color-grid: #FFFFFF;        /* Grid jadi putih tipis */
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+/* Grid Pattern Dinamis */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  /* Menggunakan variable CSS agar berubah warna otomatis */
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-ink), transparent 97%) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-ink), transparent 97%) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Ruler Dinamis */
+.bg-ruler-x {
+  background-image: linear-gradient(to right, var(--color-ink) 1px, transparent 1px);
+  background-size: 20px 100%;
+}
+.bg-ruler-y {
+  background-image: linear-gradient(to bottom, var(--color-ink) 1px, transparent 1px);
+  background-size: 100% 20px;
+}
+
+/* Noise Texture */
+.bg-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  opacity: 0.12; 
+  mix-blend-mode: multiply; /* Default untuk light mode */
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Penyesuaian Dark Mode untuk Efek Layer */
+.dark .bg-noise {
+  opacity: 0.05; 
+  mix-blend-mode: overlay; /* Ganti blend mode agar terlihat di background gelap */
+}
+
+.bg-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  /* Gunakan warna shadow dinamis */
+  background: radial-gradient(
+    circle at center,
+    transparent 40%,
+    color-mix(in srgb, var(--color-paper), transparent 90%) 70%,
+    color-mix(in srgb, var(--color-paper), black 20%) 100%
+  );
+}
